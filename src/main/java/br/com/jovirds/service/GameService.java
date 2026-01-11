@@ -1,6 +1,7 @@
 package br.com.jovirds.service;
 
 import br.com.jovirds.controllers.GameController;
+import br.com.jovirds.controllers.GameControllerV2;
 import br.com.jovirds.controllers.TesteLogController;
 import br.com.jovirds.data.dto.V1.GameDTO;
 import br.com.jovirds.data.dto.V2.GameDTOV2;
@@ -52,6 +53,9 @@ public class GameService {
 
     @Autowired
     PagedResourcesAssembler<GameDTO> assembler;
+
+    @Autowired
+    PagedResourcesAssembler<GameDTOV2> assemblerV2;
 
     @Autowired
     FileImporterFactory importer;
@@ -113,8 +117,37 @@ public class GameService {
         logger.info("Creating one Game V2");
 
         var entity = gameRepository.save(gameMapper.convertDTOV2ToEntity(game));
-        logger.info("Convet");
-        return gameMapper.convertEntityToDTOV2(entity);
+        var dto = gameMapper.convertEntityToDTOV2(entity);
+        addHateoasLinksV2(dto);
+        return dto;
+    }
+
+    public GameDTOV2 findByIdV2(Long id){
+        logger.info("Finding one Game V2");
+        var entity = gameRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("No records found for this ID"));
+
+        var dto = gameMapper.convertEntityToDTOV2(entity);
+        addHateoasLinksV2(dto);
+        return dto;
+    }
+
+    public PagedModel<EntityModel<GameDTOV2>> findAllV2(Pageable pageable) {
+        logger.info("Finding all games V2");
+
+        var gamePage = gameRepository.findAll(pageable)
+                .map(gameMapper::convertEntityToDTOV2);
+
+        return buildPagedModelV2(pageable, gamePage);
+    }
+
+    public PagedModel<EntityModel<GameDTOV2>> findByNameV2(String name, Pageable pageable){
+        logger.info("Finding Games by Name V2");
+
+        var gamePage = gameRepository.findGamesByName(name, pageable)
+                .map(gameMapper::convertEntityToDTOV2);
+
+        return buildPagedModelV2(pageable, gamePage);
     }
 
     public GameDTO update(GameDTO game){
@@ -215,6 +248,26 @@ public class GameService {
         dto.add(linkTo(methodOn(GameController.class).finishGame(dto.getId())).withRel("finish").withType("PATCH"));
         dto.add(linkTo(methodOn(GameController.class).delete(dto.getId())).withRel("delete").withType("DELETE"));
         dto.add(linkTo(methodOn(GameController.class).exportPage(1, 12,"asc", null)).withRel("exportPage").withType("GET").withTitle("Export Games"));
+    }
+
+    private PagedModel<EntityModel<GameDTOV2>> buildPagedModelV2(Pageable pageable, Page<GameDTOV2> gamePage) {
+        gamePage.forEach(this::addHateoasLinksV2);
+        
+        Link selfLink = linkTo(methodOn(GameControllerV2.class)
+                .findAllV2(
+                        pageable.getPageNumber(),
+                        pageable.getPageSize(),
+                        pageable.getSort().toString().contains("DESC") ? "desc" : "asc")
+        ).withSelfRel();
+
+        return assemblerV2.toModel(gamePage, selfLink);
+    }
+
+    private void addHateoasLinksV2(GameDTOV2 dto) {
+        dto.add(linkTo(methodOn(GameControllerV2.class).findByIdV2(dto.getId())).withSelfRel().withType("GET"));
+        dto.add(linkTo(methodOn(GameControllerV2.class).findAllV2(0, 12,"asc")).withRel("findAll").withType("GET"));
+        dto.add(linkTo(methodOn(GameControllerV2.class).findByNameV2("",0, 12,"asc")).withRel("findByName").withType("GET"));
+        dto.add(linkTo(methodOn(GameControllerV2.class).createV2(dto)).withRel("create").withType("POST"));
     }
 
 }

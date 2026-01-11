@@ -3,6 +3,7 @@ package br.com.jovirds.data.dto.V2;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -14,7 +15,7 @@ import java.util.Objects;
         "developer",
         "year"
 })
-public class GameDTOV2 implements Serializable {
+public class GameDTOV2 extends RepresentationModel<GameDTOV2> implements Serializable {
 
     private Long id;
     private String name;

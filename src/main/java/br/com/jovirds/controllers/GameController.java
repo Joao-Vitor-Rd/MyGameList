@@ -2,7 +2,6 @@ package br.com.jovirds.controllers;
 
 import br.com.jovirds.controllers.docs.GameControllerDocs;
 import br.com.jovirds.data.dto.V1.GameDTO;
-import br.com.jovirds.data.dto.V2.GameDTOV2;
 import br.com.jovirds.file.exporter.MediaTypes;
 import br.com.jovirds.service.GameService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,7 +25,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/game/v1")
-@Tag(name ="", description = "Endpoints for Managing Games")
+@Tag(name ="Games V1", description = "Endpoints for Managing Games")
 public class GameController implements GameControllerDocs {
 
     @Autowired
@@ -140,13 +139,6 @@ public class GameController implements GameControllerDocs {
         return gameService.massCreation(file);
     }
 
-    @PostMapping(
-            value = {"/v2"},
-            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE}
-    )
-    public GameDTOV2 create(@RequestBody GameDTOV2 game) { return gameService.createv2(game); }
-
     @PutMapping(
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE}
@@ -160,6 +152,5 @@ public class GameController implements GameControllerDocs {
         gameService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
 
 }
