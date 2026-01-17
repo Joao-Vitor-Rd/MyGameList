@@ -162,11 +162,29 @@ public class GameService {
         entity.setDeveloper(game.getDeveloper());
         entity.setName(game.getName());
         entity.setYear(game.getYear());
+        entity.setFinished(game.getFinished());
         var dto = parseObject(gameRepository.save(entity), GameDTO.class);
         addHateoasLinks(dto);
         return dto;
     }
+    public GameDTOV2 updatev2(GameDTOV2 game){
 
+        if (game == null) throw new RequiredObjectIsNullException();
+
+        logger.info("Updating one Game V2");
+
+        var entity = gameRepository.findById(game.getId())
+                .orElseThrow(()->new ResourceNotFoundException("No records found for this ID"));
+
+        entity.setDeveloper(game.getDeveloper());
+        entity.setName(game.getName());
+        entity.setYear(game.getYear());
+        entity.setStarRating(game.getStarRating());
+        entity.setFinished(game.getFinished());
+        var dto = parseObject(gameRepository.save(entity), GameDTOV2.class);
+        addHateoasLinksV2(dto);
+        return dto;
+    }
     public void delete(Long id){
         logger.info("Deleting one GameDTO");
 
@@ -268,6 +286,7 @@ public class GameService {
         dto.add(linkTo(methodOn(GameControllerV2.class).findAllV2(0, 12,"asc")).withRel("findAll").withType("GET"));
         dto.add(linkTo(methodOn(GameControllerV2.class).findByNameV2("",0, 12,"asc")).withRel("findByName").withType("GET"));
         dto.add(linkTo(methodOn(GameControllerV2.class).createV2(dto)).withRel("create").withType("POST"));
+        dto.add(linkTo(methodOn(GameControllerV2.class).updateV2(dto)).withRel("update").withType("PUT"));
     }
 
 }

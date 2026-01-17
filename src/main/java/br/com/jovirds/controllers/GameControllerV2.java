@@ -72,4 +72,13 @@ public class GameControllerV2 implements GameControllerDocsV2 {
     public GameDTOV2 createV2(@RequestBody GameDTOV2 game) { 
         return gameService.createv2(game); 
     }
+
+    @PutMapping(
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE}
+    )
+    @Override
+    public GameDTOV2 updateV2(@RequestBody GameDTOV2 game) { 
+        return gameService.updatev2(game); 
+    }
 }

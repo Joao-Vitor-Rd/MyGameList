@@ -176,5 +176,34 @@ public interface GameControllerDocsV2 {
             }
     )
     GameDTOV2 createV2(@RequestBody GameDTOV2 game);
+
+    @Operation(
+            summary = "Update a game",
+            description = "Update a game with new specification including star rating",
+            tags = {"Games V2"},
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = GameDTOV2.class))
+                    ),
+                    @ApiResponse(
+                            description = "Bad Request",
+                            responseCode = "400",
+                            content = @Content
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized",
+                            responseCode = "401",
+                            content = @Content
+                    ),
+                    @ApiResponse(
+                            description = "Internal Server Error",
+                            responseCode = "500",
+                            content = @Content
+                    ),
+            }
+    )
+    GameDTOV2 updateV2(@RequestBody GameDTOV2 game);
 }
 
