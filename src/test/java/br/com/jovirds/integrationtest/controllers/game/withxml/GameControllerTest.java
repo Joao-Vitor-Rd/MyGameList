@@ -203,9 +203,9 @@ class GameControllerTest extends AbstractIntegrationTest {
         assertNotNull(createOne.getId());
         assertTrue(createOne.getId() > 0);
 
-        assertEquals("Aerified", createOne.getName());
-        assertEquals("Yoveo", createOne.getDeveloper());
-        assertEquals(1985L, createOne.getYear());
+        assertEquals("Cyberpunk 2077", createOne.getName());
+        assertEquals("CD Projekt Red", createOne.getDeveloper());
+        assertEquals(2020L, createOne.getYear());
         assertTrue(createOne.getFinished());
     }
 

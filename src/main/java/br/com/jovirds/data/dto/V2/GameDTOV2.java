@@ -13,7 +13,8 @@ import java.util.Objects;
         "name",
         "star_rating",
         "developer",
-        "year"
+        "year",
+        "finished"
 })
 public class GameDTOV2 extends RepresentationModel<GameDTOV2> implements Serializable {
 
@@ -21,9 +22,11 @@ public class GameDTOV2 extends RepresentationModel<GameDTOV2> implements Seriali
     private String name;
     private String developer;
     private Long year;
+    private Boolean finished;
 
     @JsonProperty("star_rating")
     private Long starRating;
+
 
     public GameDTOV2(){};
 
@@ -63,15 +66,20 @@ public class GameDTOV2 extends RepresentationModel<GameDTOV2> implements Seriali
 
     public void setStarRating(Long startRating) { this.starRating = startRating; }
 
+    public Boolean getFinished() { return finished; }
+
+    public void setFinished(Boolean finished) { this.finished = finished; }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         GameDTOV2 gameDTOV2 = (GameDTOV2) o;
-        return Objects.equals(id, gameDTOV2.id) && Objects.equals(name, gameDTOV2.name) && Objects.equals(developer, gameDTOV2.developer) && Objects.equals(year, gameDTOV2.year) && Objects.equals(starRating, gameDTOV2.starRating);
+        return Objects.equals(id, gameDTOV2.id) && Objects.equals(name, gameDTOV2.name) && Objects.equals(developer, gameDTOV2.developer) && Objects.equals(year, gameDTOV2.year) && Objects.equals(finished, gameDTOV2.finished) && Objects.equals(starRating, gameDTOV2.starRating);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, developer, year, starRating);
+        return Objects.hash(super.hashCode(), id, name, developer, year, finished, starRating);
     }
 }

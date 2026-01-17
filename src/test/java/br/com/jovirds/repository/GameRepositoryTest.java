@@ -34,14 +34,14 @@ class GameRepositoryTest extends AbstractIntegrationTest {
     @Order(1)
     void findGamesByName() {
         Pageable pageable = PageRequest.of(0, 12, Sort.by(Sort.Direction.ASC, "name","id"));
-        game = repository.findGamesByName("a", pageable).getContent().get(3);
+        game = repository.findGamesByName("Cyberpunk", pageable).getContent().get(0);
 
         assertNotNull(game);
         assertNotNull(game.getId());
-        assertEquals("Aerified", game.getName());
-        assertEquals("Roodel", game.getDeveloper());
-        assertFalse(game.getFinished());
-        assertEquals(2001L, game.getYear());
+        assertEquals("Cyberpunk 2077", game.getName());
+        assertEquals("CD Projekt Red", game.getDeveloper());
+        assertTrue(game.getFinished());
+        assertEquals(2020L, game.getYear());
     }
 
     @Test
@@ -56,10 +56,10 @@ class GameRepositoryTest extends AbstractIntegrationTest {
 
         assertNotNull(game);
         assertNotNull(game.getId());
-        assertEquals("Roodel", game.getDeveloper());
-        assertEquals("Aerified", game.getName());
+        assertEquals("CD Projekt Red", game.getDeveloper());
+        assertEquals("Cyberpunk 2077", game.getName());
         assertTrue(game.getFinished());
-        assertEquals(2001L, game.getYear());
+        assertEquals(2020L, game.getYear());
 
     }
 }

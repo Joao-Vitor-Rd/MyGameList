@@ -14,6 +14,7 @@ public class GameMapper {
         dto.setId(game.getId());
         dto.setDeveloper(game.getDeveloper());
         dto.setStarRating(game.getStarRating());
+        dto.setFinished(game.getFinished());
         return dto;
     }
 
@@ -24,6 +25,7 @@ public class GameMapper {
         entity.setId(game.getId());
         entity.setDeveloper(game.getDeveloper());
         entity.setStarRating(game.getStarRating());
+        entity.setFinished(game.getFinished());
 
         return entity;
     }

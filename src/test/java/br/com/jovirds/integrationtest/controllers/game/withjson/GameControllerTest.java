@@ -194,9 +194,9 @@ class GameControllerTest extends AbstractIntegrationTest {
         assertNotNull(createOne.getId());
         assertTrue(createOne.getId() > 0);
 
-        assertEquals("Aerified", createOne.getName());
-        assertEquals("Yoveo", createOne.getDeveloper());
-        assertEquals(1985L, createOne.getYear());
+        assertEquals("Cyberpunk 2077", createOne.getName());
+        assertEquals("CD Projekt Red", createOne.getDeveloper());
+        assertEquals(2020L, createOne.getYear());
         assertTrue(createOne.getFinished());
     }
 
@@ -206,7 +206,7 @@ class GameControllerTest extends AbstractIntegrationTest {
 
         var content  = given(specification)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
-                .pathParam("name", "mar")
+                .pathParam("name", "The Legend")
                 .queryParam("page", 0, "size", 12, "direction", "asc")
                 .when()
                 .get("/findGameByName/{name}")
@@ -225,9 +225,9 @@ class GameControllerTest extends AbstractIntegrationTest {
         assertNotNull(createOne.getId());
         assertTrue(createOne.getId() > 0);
 
-        assertEquals("mario", createOne.getName());
-        assertEquals("nintendo - america", createOne.getDeveloper());
-        assertEquals(2005L, createOne.getYear());
+        assertEquals("The Legend of Zelda: Breath of the Wild", createOne.getName());
+        assertEquals("Nintendo", createOne.getDeveloper());
+        assertEquals(2017L, createOne.getYear());
         assertTrue(createOne.getFinished());
     }
 
