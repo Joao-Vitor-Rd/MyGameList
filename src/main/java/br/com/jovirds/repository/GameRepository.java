@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 public interface GameRepository extends JpaRepository<Game, Long> {
 
     @Modifying(clearAutomatically = true)
-    @Query("UPDATE Game g SET g.finished = true WHERE g.id =:id")
+    @Query("UPDATE Game g SET g.finished = NOT g.finished WHERE g.id =:id")
     void finishGame(@Param("id") Long id);
 
     @Query("SELECT g FROM Game g WHERE LOWER(g.name) LIKE LOWER(CONCAT('%', :name, '%'))")
