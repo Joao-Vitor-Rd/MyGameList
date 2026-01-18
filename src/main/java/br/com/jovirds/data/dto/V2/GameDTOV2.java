@@ -64,7 +64,7 @@ public class GameDTOV2 extends RepresentationModel<GameDTOV2> implements Seriali
 
     public Long getStarRating() { return starRating; }
 
-    public void setStarRating(Long startRating) { this.starRating = startRating; }
+    public void setStarRating(Long starRating) { this.starRating = starRating; }
 
     public Boolean getFinished() { return finished; }
 

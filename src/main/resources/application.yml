@@ -2,6 +2,8 @@ cors:
   originPatterns: http://localhost:8080,http://localhost:3000
 file:
   upload-dir: /Users/jxvii/OneDrive/Documentos/apiUpload
+server:
+  port: 8080
 spring:
   application:
     name: rest-api-with-spring-boot
